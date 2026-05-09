@@ -1,0 +1,374 @@
+:root {
+    --primary: #14b8a6;
+    --primary-dark: #0d9488;
+    --dark: #111827;
+    --light: #f9fafb;
+    --gray: #6b7280;
+    --light-gray: #e5e7eb;
+    --white: #fff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--dark);
+    background-color: var(--light);
+    overflow-x: hidden;
+}
+
+/* Top Info Bar Styles */
+.top-info-bar {
+    background-color: var(--dark);
+    color: var(--light);
+    padding: 10px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1030;
+    width: 100%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.top-info-bar.hidden {
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.top-info-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem; /* Added padding for responsiveness */
+}
+
+.slogan {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--primary);
+    white-space: nowrap;
+    /* Removed unnecessary alignment properties here, as they are handled by the parent flexbox */
+}
+
+.contact-info2 {
+    display: flex;
+    gap: 20px;
+}
+
+.contact-item2 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.contact-item2 i {
+    color: var(--primary);
+}
+
+.social-icons {
+    display: flex;
+    gap: 12px;
+}
+
+.social-icons a {
+    color: var(--light);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+    background-color: var(--primary);
+    transform: translateY(-2px);
+}
+
+/* Header Styles */
+header {
+    position: fixed;
+    top: 42px; /* Height of top info bar */
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Center the content container */
+    background-color: white;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Added a class for the inner content to handle max-width and padding */
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px; /* Match top-info-content width */
+    width: 100%;
+    padding: 10px 1rem; /* Padding for the inner content */
+}
+
+header.scrolled {
+    top: 0; /* Move to top when scrolled and top-info-bar is hidden */
+    /* Remove padding change here, let the inner content handle it if needed */
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logo img {
+    height: 80px;
+    transition: height 0.3s ease; /* Transition for logo size on scroll */
+}
+
+header.scrolled .logo img {
+    height: 60px; /* Smaller logo when scrolled */
+}
+
+.logo h1 {
+    color: var(--dark);
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.logo span {
+    color: var(--primary);
+}
+
+.navbar {
+    display: flex;
+    gap: 2rem;
+}
+
+.navbar a {
+    color: var(--dark);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+    position: relative;
+    /* This transition is key to see the underline removal/addition */
+    /* transition: color 0.3s ease, background-color 0.3s ease;  */
+}
+
+.navbar a:hover {
+    color: var(--primary);
+}
+
+.navbar a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background: var(--primary);
+    bottom: -4px;
+    left: 0;
+    transition: width 0.3s ease;
+}
+
+.navbar a:hover::after {
+    width: 100%;
+}
+
+/* Persistent underline for the active link (set by PHP on page load) */
+.navbar a.active {
+    color: var(--primary);
+}
+
+.navbar a.active::after {
+    width: 100%; 
+}
+
+.menu-toggle {
+    display: none;
+    cursor: pointer;
+    color: var(--dark);
+    font-size: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .top-info-bar {
+        display: none !important;
+    }
+    header {
+        position: fixed;
+        top: 0 !important; /* Header is at the very top on mobile */
+    }
+    /* Adjusted padding for header content on mobile */
+    .header-content {
+        padding: 5px 1rem;
+    }
+
+    .navbar {
+        position: fixed;
+        top: 80px; /* Give space for header/logo on mobile (approx 80px) */
+        left: -100%;
+        width: 80%;
+        height: 100vh;
+        background-color: white;
+        flex-direction: column;
+        align-items: flex-start; /* Use flex-start for mobile menu */
+        justify-content: start;
+        padding-top: 20px;
+        text-align: left;
+        gap: 1.5rem; /* Reduced gap */
+        transition: left 0.3s ease;
+        z-index: 999;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Added box shadow for visibility */
+    }
+    
+    .navbar a {
+        width: 100% !important;
+        text-align: left;
+        padding: 10px 20px; /* Added vertical padding for better tap area */
+    }
+
+    .navbar.active {
+        left: 0;
+    }
+
+    /* Mobile specific underline adjustments */
+    .navbar a::after {
+        width: 0; /* Start width at 0 for non-active links */
+        height: 2px;
+        bottom: 0; /* Changed bottom position */
+        left: 20px; /* Aligned with left padding */
+    }
+    
+    .navbar a:hover::after,
+    .navbar a.active::after {
+        width: 70%; /* Hover/Active width on mobile */
+    }
+    
+    .menu-toggle {
+        display: block;
+        color: var(--dark);
+    }
+}
+
+/* Footer styles (left as is) */
+footer {
+    background-color: black;
+    color: var(--light);
+    padding: 5rem 5% 2rem;
+}
+
+.footer-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-col h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    display: inline-block;
+}
+
+.footer-col h3::after {
+    content: '';
+    position: absolute;
+    width: 50%;
+    height: 2px;
+    background-color: var(--primary);
+    bottom: -8px;
+    left: 0;
+}
+
+.footer-col p {
+    color: var(--light-gray);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.footer-links {
+    list-style: none;
+    padding-left: 0px !important;
+}
+
+.footer-links li {
+    margin-bottom: 0.8rem;
+}
+
+.footer-links a {
+    color: var(--light-gray);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    display: inline-block;
+}
+
+.footer-links a:hover {
+    color: var(--primary);
+    transform: translateX(5px);
+}
+
+.footer-contact p {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.footer-contact i {
+    color: var(--primary);
+    font-size: 1.2rem;
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.social-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    color: var(--light);
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.social-links a:hover {
+    background-color: var(--primary);
+    transform: translateY(-3px);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 3rem;
+    margin-top: 3rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--light-gray);
+    font-size: 0.9rem;
+}

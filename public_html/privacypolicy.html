@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Hari Infra Projects</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS from your about.html, modified for general use and consistency */
+        :root {
+            --primary: #14b8a6;
+            --primary-dark: #0d9488;
+            --dark: #111827;
+            --light: #f9fafb;
+            --gray: #6b7280;
+            --light-gray: #e5e7eb;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark);
+            background-color: var(--light);
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header.scrolled {
+            padding: 1rem 5%;
+            background-color: white;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo h1 {
+            color: var(--dark);
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .navbar {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .navbar a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .navbar a:hover {
+            color: var(--primary);
+        }
+
+        .navbar a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            bottom: -4px;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+
+        .navbar a:hover::after {
+            width: 100%;
+        }
+
+        .navbar a.active {
+            color: var(--primary);
+        }
+
+        .navbar a.active::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            color: var(--dark);
+            font-size: 1.5rem;
+        }
+
+        /* Hero Section Base Styles - All hero sections will use this */
+        .page-hero {
+            height: 60vh; /* Consistent height for most pages */
+            background: linear-gradient(rgba(17, 24, 39, 0.7), rgba(17, 24, 39, 0.7)) no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            color: var(--light);
+            margin-top: 80px; /* Adjust for fixed header */
+            text-align: center; /* Center content horizontally */
+        }
+
+        .page-hero-content {
+            max-width: 800px;
+            margin: 0 auto; /* Center content div within hero */
+            animation: fadeInUp 1s ease; /* Animation for hero text */
+        }
+
+        .page-hero-content h1 {
+            font-size: 3rem; /* Consistent font size */
+            margin-bottom: 0.5rem;
+        }
+
+        .page-hero-content p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        /* Specific Backgrounds for Each Hero Section */
+        .privacy-hero-bg {
+            background-image: url('https://images.unsplash.com/photo-1542744173-8e7e53415c60?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+        }
+
+
+        /* Section Title (General styles) */
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            background-color: var(--primary);
+            bottom: -10px;
+            left: 25%;
+        }
+
+        .section-title p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Main Content Styling (Specific to policy page, but can be reused) */
+        .policy-content {
+            padding: 5rem 5%;
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 3rem; /* Space before footer */
+        }
+
+        .policy-content h2 {
+            font-size: 2rem;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .policy-content h3 {
+            font-size: 1.5rem;
+            color: var(--dark);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .policy-content p, .policy-content ul, .policy-content ol {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--gray);
+            margin-bottom: 1rem;
+        }
+
+        .policy-content ul, .policy-content ol {
+            padding-left: 20px;
+        }
+
+        .policy-content ul li, .policy-content ol li {
+            margin-bottom: 0.5rem;
+        }
+
+        .policy-content a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .policy-content a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: black;
+            color: var(--light);
+            padding: 5rem 5% 2rem;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-col h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 2px;
+            background-color: var(--primary);
+            bottom: -8px;
+            left: 0;
+        }
+
+        .footer-col p {
+            color: var(--light-gray);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: var(--light-gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: inline-block;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .footer-contact p {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-contact i {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: var(--light);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--light-gray);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .page-hero-content h1 {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 80%;
+                height: calc(100vh - 80px);
+                background-color: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 2rem;
+                transition: left 0.3s ease;
+                z-index: 999;
+            }
+            
+            .navbar.active {
+                left: 0;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            .page-hero-content h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-hero-content h1 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .animate.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <div class="logo">
+            <h1><span>HARI</span> Infra Projects</h1>
+        </div>
+        
+        <nav class="navbar" id="navbar">
+            <a href="index.php">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="services.html">Services</a>
+            <a href="gallery.php">Gallery</a>
+            <a href="compare.php">Why Choose Us</a>
+            <a href="contact.html">Contact Us</a>
+            <a href="privacy-policy.html" class="active">Privacy Policy</a>
+            <a href="admin.php">Admin</a>
+        </nav>
+        
+        <div class="menu-toggle" id="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+    </header>
+    <section class="page-hero privacy-hero-bg">
+        <div class="page-hero-content">
+            <h1>Privacy Policy</h1>
+            <p>Your privacy is important to us. Learn how we handle your information.</p>
+        </div>
+    </section>
+
+    <section class="policy-content">
+        <h2>Privacy Policy for Hari Infra Projects</h2>
+        <p><strong>Effective Date: July 23, 2025</strong></p> <p>Hari Infra Projects ("us", "we", or "our") operates the hariindia.in website (the "Service").</p>
+        <p>This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use our Service and the choices you have associated with that data.</p>
+        <p>We use your data to provide and improve the Service. By using the Service, you agree to the collection and use of information in accordance with this policy.</p>
+
+        <h3>1. Information Collection and Use</h3>
+        <p>We collect several different types of information for various purposes to provide and improve our Service to you.</p>
+
+        <h4>Types of Data Collected:</h4>
+        <ul>
+            <li><strong>Personal Data:</strong> While using our Service, we may ask you to provide us with certain personally identifiable information that can be used to contact or identify you ("Personal Data"). Personally identifiable information may include, but is not limited to:
+                <ul>
+                    <li>Email address</li>
+                    <li>First name and last name</li>
+                    <li>Phone number</li>
+                    <li>Address, State, Province, ZIP/Postal code, City</li>
+                    <li>Any other information you voluntarily provide in forms or communications.</li>
+                </ul>
+            </li>
+            <li><strong>Usage Data:</strong> We may also collect information about how the Service is accessed and used ("Usage Data"). This Usage Data may include information such as your computer's Internet Protocol address (e.g., IP address), browser type, browser version, the pages of our Service that you visit, the time and date of your visit, the time spent on those pages, unique device identifiers and other diagnostic data.</li>
+            <li><strong>Tracking & Cookies Data:</strong> We use cookies and similar tracking technologies to track the activity on our Service and hold certain information.
+                <ul>
+                    <li>Cookies are files with a small amount of data which may include an anonymous unique identifier. Cookies are sent to your browser from a website and stored on your device.</li>
+                    <li>Tracking technologies also used are beacons, tags, and scripts to collect and track information and to improve and analyze our Service.</li>
+                </ul>
+                <p>You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent. However, if you do not accept cookies, you may not be able to use some portions of our Service.</p>
+            </li>
+        </ul>
+
+        <h3>2. Use of Data</h3>
+        <p>Hari Infra Projects uses the collected data for various purposes:</p>
+        <ul>
+            <li>To provide and maintain the Service</li>
+            <li>To notify you about changes to our Service</li>
+            <li>To allow you to participate in interactive features of our Service when you choose to do so</li>
+            <li>To provide customer care and support</li>
+            <li>To provide analysis or valuable information so that we can improve the Service</li>
+            <li>To monitor the usage of the Service</li>
+            <li>To detect, prevent and address technical issues</li>
+            <li>To provide you with news, special offers and general information about other goods, services and events which we offer that are similar to those that you have already purchased or enquired about unless you have opted not to receive such information.</li>
+            <li>To respond to your inquiries regarding our solar solutions and services.</li>
+            <li>For lead generation and business development related to our EPC services.</li>
+        </ul>
+
+        <h3>3. Transfer Of Data</h3>
+        <p>Your information, including Personal Data, may be transferred to — and maintained on — computers located outside of your state, province, country or other governmental jurisdiction where the data protection laws may differ than those from your jurisdiction.</p>
+        <p>If you are located outside India and choose to provide information to us, please note that we transfer the data, including Personal Data, to India and process it there.</p>
+        <p>Your consent to this Privacy Policy followed by your submission of such information represents your agreement to that transfer.</p>
+        <p>Hari Infra Projects will take all steps reasonably necessary to ensure that your data is treated securely and in accordance with this Privacy Policy and no transfer of your Personal Data will take place to an organization or a country unless there are adequate controls in place including the security of your data and other personal information.</p>
+
+        <h3>4. Disclosure Of Data</h3>
+        <h4>Legal Requirements:</h4>
+        <p>Hari Infra Projects may disclose your Personal Data in the good faith belief that such action is necessary to:</p>
+        <ul>
+            <li>To comply with a legal obligation</li>
+            <li>To protect and defend the rights or property of Hari Infra Projects</li>
+            <li>To prevent or investigate possible wrongdoing in connection with the Service</li>
+            <li>To protect the personal safety of users of the Service or the public</li>
+            <li>To protect against legal liability</li>
+        </ul>
+
+        <h3>5. Security Of Data</h3>
+        <p>The security of your data is important to us, but remember that no method of transmission over the Internet, or method of electronic storage is 100% secure. While we strive to use commercially acceptable means to protect your Personal Data, we cannot guarantee its absolute security.</p>
+
+        <h3>6. Service Providers</h3>
+        <p>We may employ third party companies and individuals to facilitate our Service ("Service Providers"), to provide the Service on our behalf, to perform Service-related services or to assist us in analyzing how our Service is used.</p>
+        <p>These third parties have access to your Personal Data only to perform these tasks on our behalf and are obligated not to disclose or use it for any other purpose.</p>
+        <h3>7. Links To Other Sites</h3>
+        <p>Our Service may contain links to other sites that are not operated by us. If you click on a third party link, you will be directed to that third party's site. We strongly advise you to review the Privacy Policy of every site you visit.</p>
+        <p>We have no control over and assume no responsibility for the content, privacy policies or practices of any third party sites or services.</p>
+
+        <h3>8. Children's Privacy</h3>
+        <p>Our Service does not address anyone under the age of 18 ("Children").</p>
+        <p>We do not knowingly collect personally identifiable information from anyone under the age of 18. If you are a parent or guardian and you are aware that your Children has provided us with Personal Data, please contact us. If we become aware that we have collected Personal Data from children without verification of parental consent, we take steps to remove that information from our servers.</p>
+
+        <h3>9. Changes To This Privacy Policy</h3>
+        <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page.</p>
+        <p>We will let you know via email and/or a prominent notice on our Service, prior to the change becoming effective and update the "effective date" at the top of this Privacy Policy.</p>
+        <p>You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page.</p>
+
+        <h3>10. Contact Us</h3>
+        <p>If you have any questions about this Privacy Policy, please contact us:</p>
+        <ul>
+            <li>By email: <a href="mailto:info@hariindia.in">info@hariindia.in</a></li>
+            <li>By phone number: <a href="tel:+916355048708">+91 6355048708</a></li>
+            <li>By visiting this page on our website: [Consider adding a link to your Contact Us page if it has a direct form]</li>
+            <li>By mail: 25-A ASHTAVINAYAK INDUSTRIAL PARK, MEHSANA, nr. ISCON CIRCLE, BYPASROAD, Nugar, Gujarat 384002</li>
+        </ul>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <div class="logo">
+                    <h1 style="color: white;"><span>HARI</span> Infra Projects</h1>
+                </div>
+                <p>Powering a greener tomorrow with reliable, efficient, and affordable solar energy solutions across Gujarat since 2021.</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/profile.php?id=100088891761152" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/hari_solar_mehsana/" target="_blank"><i class="fab fa-instagram"></i></a>
+                    </div>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="gallery.php">Gallery</a></li>
+                    <li><a href="compare.php">Why Choose Us</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Our Services</h3>
+                <ul class="footer-links">
+                    <li><a href="services.html">Residential Solar</a></li>
+                    <li><a href="services.html">Commercial Solar</a></li>
+                    <li><a href="services.html">Industrial Solar</a></li>
+                    <!-- <li><a href="services.html">Solar Maintenance</a></li> -->
+                    <li><a href="services.html">Net Metering</a></li>
+                    <li><a href="services.html">Government Approvals</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Contact Us</h3>
+                <div class="footer-contact">
+                    <p><i class="fas fa-map-marker-alt"></i> 25-A ASHTAVINAYAK INDUSTRIAL PARK, MEHSANA, nr. ISCON CIRCLE, BYPASROAD, Nugar, Gujarat 384002</p>
+                    
+                    <p><i class="fas fa-phone-alt"></i> 
+                        <a href="tel:+916355048708" style="color: inherit; text-decoration: none;">+91 6355048708</a>
+                    </p>
+                    
+                    <p><i class="fas fa-envelope"></i> 
+                        <a href="mailto:info@hariindia.in" style="color: inherit; text-decoration: none;">info@hariindia.in</a>
+                    </p>
+                    
+                    <p><i class="fab fa-whatsapp"></i> 
+                        <a href="https://wa.me/916355048708" target="_blank" style="color: inherit; text-decoration: none;">+91 6355048708</a>
+                    </p>
+                </div>
+            </div>
+
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2023 Hari Infra Projects. All Rights Reserved.</p> </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4yFFTOpGkWT/s3E3x1aCpe/HFjFKJtYw4z/y6I7gqM4V+Jt+N2" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlco9tFhENBMJ+1L74jKkgu1qgmnL+6Xz8/Q2D1tF1X5w5" crossorigin="anonymous"></script>
+    <script>
+        // Header Scroll Effect (retained for consistency with original scripts)
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile Menu Toggle (retained for consistency with original scripts)
+        const menuToggle = document.getElementById('menu-toggle');
+        const navbar = document.getElementById('navbar');
+
+        menuToggle.addEventListener('click', function() {
+            navbar.classList.toggle('active');
+            menuToggle.innerHTML = navbar.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+
+        // Close menu when clicking on a link (retained for consistency)
+        const navLinks = document.querySelectorAll('.navbar a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                navbar.classList.remove('active');
+                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+
+        // Scroll Animation (for elements with .animate class)
+        const animateElements = document.querySelectorAll('.animate');
+        
+        function checkScroll() {
+            animateElements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementPosition < windowHeight - 100) {
+                    element.classList.add('animated');
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', checkScroll);
+        window.addEventListener('load', checkScroll);
+
+        // Smooth scrolling for anchor links (if any on this page)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80, // Adjust for fixed header height
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Active link highlighting for HTML file (less robust than PHP version)
+        navLinks.forEach(link => {
+            const currentPath = window.location.pathname;
+            const linkHref = link.getAttribute('href');
+
+            if (linkHref) {
+                const linkFileName = linkHref.substring(linkHref.lastIndexOf('/') + 1);
+                const currentFileName = currentPath.substring(currentPath.lastIndexOf('/') + 1);
+
+                if (linkFileName === currentFileName && linkFileName === 'privacy-policy.html') {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            }
+        });
+    </script>
+    <a href="https://wa.me/916355048708" target="_blank" aria-label="Chat on WhatsApp"
+       style="position: fixed; bottom: 20px; right: 20px; background-color: #25d366; color: white; font-size: 28px; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.3); transition: background-color 0.3s ease;"
+       onmouseover="this.style.backgroundColor='#1ebea5'; this.style.transform='translateY(-3px)'"
+       onmouseout="this.style.backgroundColor='#25d366'; this.style.transform='none'">
+      <i class="fab fa-whatsapp"></i>
+    </a>
+</body>
+</html>
