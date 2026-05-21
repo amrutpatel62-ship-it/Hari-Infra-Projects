@@ -399,29 +399,8 @@
 
         /* Responsive Styles (General from index) */
         @media (max-width: 1024px) {
-            .navbar {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                /* Start hidden off-screen to the right */
-                left: auto;
-                /* Override any left: 0; */
-                width: 250px;
-                /* Adjust width as needed */
-                height: 100vh;
-                background-color: white;
-                /* Or your preferred color */
-                transition: 0.3s ease-in-out;
-                z-index: 999;
-                display: flex;
-                flex-direction: column;
-                padding-top: 80px;
-                /* Space for the close button or header height */
-            }
-
-            .navbar.active {
-                right: 0;
-                left: auto;
+            .hero-content h1 {
+                font-size: 3rem;
             }
 
             .about-section,
@@ -601,7 +580,6 @@
                 transform: translateX(100%);
                 opacity: 0;
             }
-
             to {
                 transform: translateX(0);
                 opacity: 1;
@@ -691,7 +669,7 @@
                 <h3>Business Hours</h3>
                 <div class="hours-item">
                     <span>Monday - Friday</span>
-                    <span>10:00 AM - 6:00 PM</span>
+                    <span>9:00 AM - 6:00 PM</span>
                 </div>
                 <div class="hours-item">
                     <span>Saturday</span>
@@ -944,5 +922,4 @@
         <i class="fab fa-whatsapp"></i>
     </a>
 </body>
-
 </html>

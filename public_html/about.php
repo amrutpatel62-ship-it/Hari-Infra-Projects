@@ -1,22 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us - Hari Infra Projects</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="header.css">
     <style>
+       
         /* Hero Section (General styles from index) */
         .hero {
-            height: 120vh;
-            background: linear-gradient(rgba(17, 24, 39, 0.7), rgba(17, 24, 39, 0.7)),
-                url('about.png') no-repeat center center/cover;
+            height:120vh;
+            background: linear-gradient(rgba(17, 24, 39, 0.7), rgba(17, 24, 39, 0.7)), 
+                        url('about.png') no-repeat center center/cover;
             display: flex;
             align-items: center;
             padding: 0 5%;
@@ -118,14 +116,13 @@
         /* About Page Specific Styles */
         .about-hero {
             height: 60vh;
-            background: linear-gradient(rgba(17, 24, 39, 0.7), rgba(17, 24, 39, 0.7)),
-                url('about.png') no-repeat center center/cover;
+            background: linear-gradient(rgba(17, 24, 39, 0.7), rgba(17, 24, 39, 0.7)), 
+                        url('about.png') no-repeat center center/cover;
             display: flex;
             align-items: center;
             padding: 0 5%;
             color: var(--light);
-            margin-top: 80px;
-            /* Adjust for fixed header */
+            margin-top: 80px; /* Adjust for fixed header */
         }
 
         .about-hero-content {
@@ -259,8 +256,7 @@
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2.5rem;
             margin-top: 3rem;
-            justify-content: center;
-            /* Center items if fewer than grid columns */
+            justify-content: center; /* Center items if fewer than grid columns */
         }
 
         .team-member-card {
@@ -407,44 +403,23 @@
 
         /* Responsive Styles */
         @media (max-width: 1024px) {
-            .navbar {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                /* Start hidden off-screen to the right */
-                left: auto;
-                /* Override any left: 0; */
-                width: 250px;
-                /* Adjust width as needed */
-                height: 100vh;
-                background-color: white;
-                /* Or your preferred color */
-                transition: 0.3s ease-in-out;
-                z-index: 999;
-                display: flex;
-                flex-direction: column;
-                padding-top: 80px;
-                /* Space for the close button or header height */
+            .hero-content h1 {
+                font-size: 3rem;
             }
-
-            .navbar.active {
-                right: 0;
-                left: auto;
-            }
-
-            .about-section,
+            
+            .about-section, 
             .contact-container {
                 grid-template-columns: 1fr;
             }
-
+            
             .about-section.reverse {
                 grid-template-columns: 1fr;
             }
-
+            
             .about-img {
                 order: -1;
             }
-
+            
             .about-section.reverse .about-img {
                 order: 1;
             }
@@ -459,7 +434,7 @@
                 justify-content: center;
                 gap: 15px;
             }
-
+            
             .slogan {
                 order: 3;
                 width: 100%;
@@ -468,21 +443,21 @@
         }
 
         @media (max-width: 768px) {
-
-
+            
+            
             .hero-content h1 {
                 font-size: 2.5rem;
             }
-
+            
             .cta-buttons {
                 flex-direction: column;
             }
-
+            
             .btn {
                 width: 100%;
                 text-align: center;
             }
-
+            
             .contact-info {
                 flex-direction: column;
                 gap: 10px;
@@ -493,36 +468,35 @@
             .hero-content h1 {
                 font-size: 2rem;
             }
-
+            
             .section-title h2 {
                 font-size: 2rem;
             }
-
+            
             .about-hero-content h1,
             .services-hero-content h1,
             .contact-hero-content h1 {
                 font-size: 2.5rem;
             }
-
+            
             .stat-card h3 {
                 font-size: 2rem;
             }
 
             .team-container {
-                grid-template-columns: 1fr;
-                /* Stack members on small screens */
+                grid-template-columns: 1fr; /* Stack members on small screens */
             }
-
+            
             .top-info-content {
                 flex-direction: column;
                 gap: 10px;
             }
-
+            
             .slogan {
                 order: 0;
                 width: auto;
             }
-
+            
             .contact-info {
                 flex-direction: row;
                 flex-wrap: wrap;
@@ -536,7 +510,6 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
-
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -555,15 +528,13 @@
         }
     </style>
 </head>
-
 <body>
     <?php include('common/header.php') ?>
 
     <section class="about-hero">
         <div class="about-hero-content">
             <h1>About Hari Infra Projects</h1>
-            <p>Established in 2021, we are a trusted EPC company specializing in solar rooftop solutions, committed to
-                powering Gujarat's renewable energy future.</p>
+            <p>Established in 2021, we are a trusted EPC company specializing in solar rooftop solutions, committed to powering Gujarat's renewable energy future.</p>
         </div>
     </section>
 
@@ -571,34 +542,22 @@
         <div class="about-section animate">
             <div class="about-text">
                 <h2>Our Story</h2>
-                <p>Founded in 2021 in Mehsana, Gujarat, Hari Infra Projects began with a vision to make solar energy
-                    accessible and affordable for all. What started as a small team of solar enthusiasts has grown into
-                    a reputable EPC company with over 450 successful projects across residential, commercial, and
-                    industrial sectors.</p>
-                <p>Our journey has been marked by continuous learning, innovation, and an unwavering commitment to
-                    quality. From our first 1kW residential installation to our recent 500kW industrial solar plant,
-                    each project has strengthened our expertise and reinforced our dedication to sustainable energy
-                    solutions.</p>
+                <p>Founded in 2021 in Mehsana, Gujarat, Hari Infra Projects began with a vision to make solar energy accessible and affordable for all. What started as a small team of solar enthusiasts has grown into a reputable EPC company with over 450 successful projects across residential, commercial, and industrial sectors.</p>
+                <p>Our journey has been marked by continuous learning, innovation, and an unwavering commitment to quality. From our first 1kW residential installation to our recent 500kW industrial solar plant, each project has strengthened our expertise and reinforced our dedication to sustainable energy solutions.</p>
             </div>
             <div class="about-img">
-                <img src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80"
-                    alt="Our Team">
+                <img src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80" alt="Our Team">
             </div>
         </div>
-
+        
         <div class="about-section reverse animate">
             <div class="about-img">
-                <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-                    alt="Solar Installation">
+                <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Solar Installation">
             </div>
             <div class="about-text">
                 <h2>Why Choose Us</h2>
-                <p>With 2+ MW of cumulative installed capacity, Hari Infra Projects stands out for its technical
-                    expertise, transparent processes, and customer-centric approach. We use only high-efficiency
-                    components from trusted manufacturers and maintain strict quality control at every stage.</p>
-                <p>Our team combines deep solar industry knowledge with local expertise, enabling us to deliver
-                    customized solutions that maximize energy generation and return on investment for our clients across
-                    North and Central Gujarat.</p>
+                <p>With 2+ MW of cumulative installed capacity, Hari Infra Projects stands out for its technical expertise, transparent processes, and customer-centric approach. We use only high-efficiency components from trusted manufacturers and maintain strict quality control at every stage.</p>
+                <p>Our team combines deep solar industry knowledge with local expertise, enabling us to deliver customized solutions that maximize energy generation and return on investment for our clients across North and Central Gujarat.</p>
             </div>
         </div>
     </section>
@@ -608,30 +567,24 @@
             <h2>Our Mission & Vision</h2>
             <p>Driving Gujarat's transition to clean, renewable energy through innovative solar solutions</p>
         </div>
-
+        
         <div class="mv-container">
             <div class="mv-card animate">
                 <i class="fas fa-bullseye"></i>
                 <h3>Our Mission</h3>
-                <p>To make clean, renewable solar energy both accessible and affordable for every home and business in
-                    Gujarat. We strive to help our clients reduce electricity bills, lower carbon footprints, and
-                    achieve energy independence through reliable solar solutions.</p>
+                <p>To make clean, renewable solar energy both accessible and affordable for every home and business in Gujarat. We strive to help our clients reduce electricity bills, lower carbon footprints, and achieve energy independence through reliable solar solutions.</p>
             </div>
-
+            
             <div class="mv-card animate">
                 <i class="fas fa-eye"></i>
                 <h3>Our Vision</h3>
-                <p>To be Gujarat's most trusted solar EPC company, recognized for quality, innovation, and customer
-                    satisfaction. We envision a future where solar energy powers sustainable development across urban
-                    and rural communities alike.</p>
+                <p>To be Gujarat's most trusted solar EPC company, recognized for quality, innovation, and customer satisfaction. We envision a future where solar energy powers sustainable development across urban and rural communities alike.</p>
             </div>
-
+            
             <div class="mv-card animate">
                 <i class="fas fa-handshake"></i>
                 <h3>Our Values</h3>
-                <p>Integrity, Quality, Innovation, and Sustainability guide everything we do. We believe in transparent
-                    dealings, long-term relationships, and solutions that benefit both our clients and the environment.
-                </p>
+                <p>Integrity, Quality, Innovation, and Sustainability guide everything we do. We believe in transparent dealings, long-term relationships, and solutions that benefit both our clients and the environment.</p>
             </div>
         </div>
     </section>
@@ -641,16 +594,14 @@
             <h2>Meet Our Founders</h2>
             <p>Hari Infra Projects is led by experienced professionals dedicated to excellence in solar energy.</p>
         </div>
-
+        
         <div class="team-container">
             <div class="team-member-card animate">
-                <img src="owner1.png" alt="Owner 1 Name">
-                <h3>Krupal Mehta</h3>
+                <img src="owner1.png" alt="Owner 1 Name"> <h3>Krupal Mehta</h3>
             </div>
-
+            
             <div class="team-member-card animate">
-                <img src="owner2.png" alt="Owner 2 Name">
-                <h3>Amrut Patel</h3>
+                <img src="owner2.png" alt="Owner 2 Name"> <h3>Amrut Patel</h3>
             </div>
         </div>
     </section>
@@ -659,7 +610,7 @@
 
     <script>
         // Sticky header functionality
-        window.addEventListener('scroll', function () {
+        window.addEventListener('scroll', function() {
             const header = document.getElementById('header');
             if (window.scrollY > 50) {
                 header.classList.add('scrolled');
@@ -669,20 +620,16 @@
         });
 
         // Mobile menu toggle
-        document.getElementById('menuToggle').addEventListener('click', function () {
+        document.getElementById('menuToggle').addEventListener('click', function() {
             document.querySelector('.navbar').classList.toggle('active');
         });
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4yFFTOpGkWT/s3E3x1aCpe/HFjFKJtYw4z/y6I7gqM4V+Jt+N2"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
-        integrity="sha384-0pUGZvbkm6XF6gxjEnlco9tFhENBMJ+1L74jKkgu1qgmnL+6Xz8/Q2D1tF1X5w5"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4yFFTOpGkWT/s3E3x1aCpe/HFjFKJtYw4z/y6I7gqM4V+Jt+N2" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlco9tFhENBMJ+1L74jKkgu1qgmnL+6Xz8/Q2D1tF1X5w5" crossorigin="anonymous"></script>
     <script>
         // Header Scroll Effect
-        window.addEventListener('scroll', function () {
+        window.addEventListener('scroll', function() {
             const header = document.getElementById('header');
             if (window.scrollY > 50) {
                 header.classList.add('scrolled');
@@ -695,16 +642,16 @@
         const menuToggle = document.getElementById('menu-toggle');
         const navbar = document.getElementById('navbar');
 
-        menuToggle.addEventListener('click', function () {
+        menuToggle.addEventListener('click', function() {
             navbar.classList.toggle('active');
-            menuToggle.innerHTML = navbar.classList.contains('active') ?
+            menuToggle.innerHTML = navbar.classList.contains('active') ? 
                 '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
         });
 
         // Close menu when clicking on a link
         const navLinks = document.querySelectorAll('.navbar a');
         navLinks.forEach(link => {
-            link.addEventListener('click', function () {
+            link.addEventListener('click', function() {
                 navbar.classList.remove('active');
                 menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
             });
@@ -712,29 +659,29 @@
 
         // Scroll Animation (for elements with .animate class)
         const animateElements = document.querySelectorAll('.animate');
-
+        
         function checkScroll() {
             animateElements.forEach(element => {
                 const elementPosition = element.getBoundingClientRect().top;
                 const windowHeight = window.innerHeight;
-
+                
                 if (elementPosition < windowHeight - 100) {
                     element.classList.add('animated');
                 }
             });
         }
-
+        
         window.addEventListener('scroll', checkScroll);
         window.addEventListener('load', checkScroll);
 
         // Smooth scrolling for anchor links (if any on this page)
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+            anchor.addEventListener('click', function(e) {
                 e.preventDefault();
-
+                
                 const targetId = this.getAttribute('href');
                 if (targetId === '#') return;
-
+                
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
                     window.scrollTo({
@@ -755,5 +702,4 @@
         <i class="fab fa-whatsapp"></i>
     </a>
 </body>
-
 </html>

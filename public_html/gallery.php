@@ -15,6 +15,7 @@
         /* Hero Section (General styles from index) - Keeping it for reference, though gallery-hero is specific */
         .hero {
             height: 100vh;
+
             display: flex;
             align-items: center;
             padding: 0 5%;
@@ -116,7 +117,8 @@
         /* Gallery Page Specific Styles */
         .gallery-hero {
             height: 60vh;
-            background-image: linear-gradient(rgba(17, 24, 39, 0.7), rgba(17, 24, 39, 0.7)),
+            background-image:
+                linear-gradient(rgba(17, 24, 39, 0.7), rgba(17, 24, 39, 0.7)),
                 url('003.jpg');
             background-repeat: no-repeat;
             background-position: center center;
@@ -125,7 +127,7 @@
             align-items: center;
             padding: 0 5%;
             color: var(--light);
-            margin-top: 80px;
+            /* Adjusted for top info bar + header */
         }
 
         .gallery-hero-content {
@@ -149,7 +151,7 @@
             margin: 0 auto;
         }
 
-        /* Gallery Grid */
+        /* --- GALLERY GRID CHANGES START HERE --- */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -162,47 +164,21 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             position: relative;
+            /* Default background - you can set this to white or black based on your preference for items not configured */
             background-color: white;
             margin-bottom: 1.5rem;
-            display: flex;
-            /* Changed from inline-block to flex for alignment */
-            flex-direction: column;
+            display: inline-block;
             width: 100%;
             box-sizing: border-box;
-            cursor: pointer;
+            -webkit-column-break-inside: avoid;
+            page-break-inside: avoid;
+            break-inside: avoid;
         }
 
-        /* UPDATED: Added Play Button Overlay for Videos */
-        .gallery-item[data-type="video"]::before {
-            content: '\f04b';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            position: absolute;
-            top: 40%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(20, 184, 166, 0.8);
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2;
-            font-size: 20px;
-            pointer-events: none;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            transition: 0.3s;
-        }
-
-        .gallery-item:hover[data-type="video"]::before {
-            background: #14b8a6;
-            transform: translate(-50%, -50%) scale(1.1);
-        }
-
+        /* New classes for dynamic backgrounds */
         .gallery-item.bg-black {
             background-color: black;
+            /* Adjust box-shadow color if needed for better contrast on black background */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
 
@@ -213,135 +189,36 @@
 
         .gallery-item.bg-black .item-title {
             color: white;
+            /* Text color for black background */
         }
+
+        /* End new classes */
+
 
         .gallery-item:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
 
-        /* SOLUTION: Fixed height and object-fit cover ensures even alignment */
         .gallery-item img,
         .gallery-item video {
             width: 100%;
-            height: 250px;
-            /* Force same height for all grid items */
+            height: auto;
             display: block;
-            object-fit: cover;
-            /* Crops center to fit, prevents stretching */
+            object-fit: contain;
+            max-height: 600px;
         }
 
         .gallery-item .item-title {
             padding: 1rem;
             font-weight: 600;
             color: var(--dark);
-            text-align: center;
-            margin-top: auto;
-            /* Ensures title stays at bottom */
-        }
-
-        /* Lightbox Styles */
-        .lightbox {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.95);
-            z-index: 9999;
-            justify-content: center;
-            align-items: center;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .lightbox.active {
-            display: flex;
-        }
-
-        .lightbox-content {
-            max-width: 90%;
-            max-height: 90%;
-            position: relative;
-            animation: scaleIn 0.3s ease;
-        }
-
-        .lightbox-content img,
-        .lightbox-content video {
-            max-width: 100%;
-            max-height: 90vh;
-            object-fit: contain;
-            border-radius: 8px;
-            height: auto;
-            /* Allow lightbox to show full image */
-        }
-
-        .lightbox-close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 40px;
-            color: white;
-            cursor: pointer;
-            background: rgba(0, 0, 0, 0.5);
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            z-index: 10000;
-        }
-
-        .lightbox-close:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: rotate(90deg);
-        }
-
-        .lightbox-title {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-size: 1.1rem;
-            max-width: 80%;
+            /* Default text color */
             text-align: center;
         }
 
-        .lightbox-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 50px;
-            color: white;
-            cursor: pointer;
-            background: rgba(0, 0, 0, 0.5);
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            z-index: 10000;
-        }
+        /* --- GALLERY GRID CHANGES END HERE --- */
 
-        .lightbox-nav:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .lightbox-prev {
-            left: 20px;
-        }
-
-        .lightbox-next {
-            right: 20px;
-        }
 
         /* Footer (General styles from index) */
         footer {
@@ -446,31 +323,11 @@
             font-size: 0.9rem;
         }
 
-        /* Responsive Styles */
+        /* Responsive Styles for Gallery Grid and Top Bar */
         @media (max-width: 1024px) {
-            .navbar {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                /* Start hidden off-screen to the right */
-                left: auto;
-                /* Override any left: 0; */
-                width: 250px;
-                /* Adjust width as needed */
-                height: 100vh;
-                background-color: white;
-                /* Or your preferred color */
-                transition: 0.3s ease-in-out;
-                z-index: 999;
-                display: flex;
-                flex-direction: column;
-                padding-top: 80px;
-                /* Space for the close button or header height */
-            }
-
-            .navbar.active {
-                right: 0;
-                left: auto;
+            .gallery-grid {
+                columns: 2 280px;
+                /* 2 columns on medium screens */
             }
 
             .top-info-content {
@@ -485,6 +342,8 @@
         }
 
         @media (max-width: 768px) {
+
+
             .hero-content h1 {
                 font-size: 2.5rem;
             }
@@ -499,7 +358,8 @@
             }
 
             .gallery-grid {
-                grid-template-columns: 1fr;
+                columns: 1 250px;
+                /* Single column on small screens */
             }
 
             .top-info-bar {
@@ -514,33 +374,7 @@
 
             .gallery-hero {
                 margin-top: 120px;
-            }
-
-            .lightbox-close {
-                top: 10px;
-                right: 10px;
-                font-size: 30px;
-                width: 40px;
-                height: 40px;
-            }
-
-            .lightbox-nav {
-                font-size: 30px;
-                width: 45px;
-                height: 45px;
-            }
-
-            .lightbox-prev {
-                left: 10px;
-            }
-
-            .lightbox-next {
-                right: 10px;
-            }
-
-            .lightbox-title {
-                font-size: 0.9rem;
-                padding: 8px 15px;
+                /* Adjusted for mobile header positioning */
             }
         }
 
@@ -564,42 +398,28 @@
                 font-size: 2rem;
             }
 
+            .gallery-grid {
+                columns: 1;
+                /* Always single column on very small screens */
+            }
+
             .top-info-bar {
                 display: none;
+                /* Hide top bar on very small screens to save space */
             }
 
             header {
                 top: 0;
+                /* Reset header position when top bar is hidden */
             }
 
             .gallery-hero {
                 margin-top: 80px;
+                /* Reset margin when top bar is hidden */
             }
         }
 
-        /* Animations */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes scaleIn {
-            from {
-                transform: scale(0.8);
-                opacity: 0;
-            }
-
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
+        /* Animations (General from index) */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -636,7 +456,6 @@
         </div>
     </section>
 
-
     <section class="gallery-content">
         <div class="section-title animate">
             <h2>Our Gallery</h2>
@@ -646,11 +465,12 @@
         <div class="gallery-grid">
             <?php
             $gallery_dir = 'gallery/';
-            $config_file = 'gallery_config.json';
+            $config_file = 'gallery_config.json'; // Path to your config file
             $files = scandir($gallery_dir);
             $media_items = [];
             $background_config = [];
 
+            // Attempt to load background configuration
             if (file_exists($config_file)) {
                 $json_content = file_get_contents($config_file);
                 $decoded_json = json_decode($json_content, true);
@@ -663,6 +483,8 @@
                 error_log("Gallery config file not found: " . $config_file);
             }
 
+
+            // Define supported image and video extensions
             $image_extensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
             $video_extensions = ['mp4', 'webm', 'ogg', 'mov'];
 
@@ -679,29 +501,29 @@
                         'type' => 'video',
                         'path' => $file_path,
                         'name' => basename($file, '.' . $extension),
-                        'filename_only' => $file
+                        'filename_only' => $file // Store original filename for config lookup
                     ];
                 } elseif (in_array($extension, $image_extensions)) {
                     $media_items['images'][] = [
                         'type' => 'image',
                         'path' => $file_path,
                         'name' => basename($file, '.' . $extension),
-                        'filename_only' => $file
+                        'filename_only' => $file // Store original filename for config lookup
                     ];
                 }
             }
 
+            // Prioritize videos, then images
             if (isset($media_items['videos'])) {
                 foreach ($media_items['videos'] as $video) {
                     $bg_class = '';
                     if (isset($background_config[$video['filename_only']])) {
                         $bg_class = 'bg-' . htmlspecialchars($background_config[$video['filename_only']]);
                     }
-                    echo '<div class="gallery-item animate ' . $bg_class . '" data-type="video" data-src="' . htmlspecialchars($video['path']) . '" data-title="' . htmlspecialchars(ucwords(str_replace(['-', '_'], ' ', $video['name']))) . '">';
-                    // UPDATED: Added 'controls' here to show the play/volume bar
-                    echo '<video playsinline preload="metadata" controls>';
+                    echo '<div class="gallery-item animate ' . $bg_class . '">';
+                    echo '<video controls playsinline preload="metadata">';
                     echo '<source src="' . htmlspecialchars($video['path']) . '" type="video/' . pathinfo($video['path'], PATHINFO_EXTENSION) . '">';
-                    echo 'Your browser does not support the video tag.';
+                    echo 'Your browser does not support the video tag. Please download the video: <a href="' . htmlspecialchars($video['path']) . '">Download ' . htmlspecialchars($video['name']) . '</a>';
                     echo '</video>';
                     echo '<div class="item-title">' . htmlspecialchars(ucwords(str_replace(['-', '_'], ' ', $video['name']))) . '</div>';
                     echo '</div>';
@@ -714,7 +536,7 @@
                     if (isset($background_config[$image['filename_only']])) {
                         $bg_class = 'bg-' . htmlspecialchars($background_config[$image['filename_only']]);
                     }
-                    echo '<div class="gallery-item animate ' . $bg_class . '" data-type="image" data-src="' . htmlspecialchars($image['path']) . '" data-title="' . htmlspecialchars(ucwords(str_replace(['-', '_'], ' ', $image['name']))) . '">';
+                    echo '<div class="gallery-item animate ' . $bg_class . '">';
                     echo '<img src="' . htmlspecialchars($image['path']) . '" alt="' . htmlspecialchars(ucwords(str_replace(['-', '_'], ' ', $image['name']))) . '">';
                     echo '<div class="item-title">' . htmlspecialchars(ucwords(str_replace(['-', '_'], ' ', $image['name']))) . '</div>';
                     echo '</div>';
@@ -728,21 +550,6 @@
         </div>
     </section>
 
-    <div class="lightbox" id="lightbox">
-        <div class="lightbox-close" id="lightbox-close">
-            <i class="fas fa-times"></i>
-        </div>
-        <div class="lightbox-nav lightbox-prev" id="lightbox-prev">
-            <i class="fas fa-chevron-left"></i>
-        </div>
-        <div class="lightbox-content" id="lightbox-content">
-        </div>
-        <div class="lightbox-nav lightbox-next" id="lightbox-next">
-            <i class="fas fa-chevron-right"></i>
-        </div>
-        <div class="lightbox-title" id="lightbox-title"></div>
-    </div>
-
     <?php include('common/footer.php') ?>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
@@ -752,15 +559,21 @@
         integrity="sha384-0pUGZvbkm6XF6gxjEnlco9tFhENBMJ+1L74jKkgu1qgmnL+6Xz8/Q2D1tF1X5w5"
         crossorigin="anonymous"></script>
     <script>
-        // Header Scroll Effect
+        // Header Scroll Effect - Modified to handle top info bar
         window.addEventListener('scroll', function () {
             const header = document.getElementById('header');
             const topInfoBar = document.querySelector('.top-info-bar');
 
             if (window.scrollY > 50) {
                 header.classList.add('scrolled');
+                // if (topInfoBar) {
+                //     topInfoBar.style.transform = 'translateY(-100%)';
+                // }
             } else {
                 header.classList.remove('scrolled');
+                // if (topInfoBar) {
+                //     topInfoBar.style.transform = 'translateY(0)';
+                // }
             }
         });
 
@@ -768,32 +581,22 @@
         const menuToggle = document.getElementById('menu-toggle');
         const navbar = document.getElementById('navbar');
 
-        if (menuToggle && navbar) {
-            menuToggle.addEventListener('click', function () {
-                navbar.classList.toggle('active');
-                menuToggle.innerHTML = navbar.classList.contains('active') ?
-                    '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
-            });
+        menuToggle.addEventListener('click', function() {
+            navbar.classList.toggle('active');
+            menuToggle.innerHTML = navbar.classList.contains('active') ?
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
 
-            // Close menu when clicking on a link
-            const navLinks = document.querySelectorAll('.navbar a');
-            navLinks.forEach(link => {
-                link.addEventListener('click', function () {
-                    navbar.classList.remove('active');
-                    menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-                });
+        // Close menu when clicking on a link
+        const navLinks = document.querySelectorAll('.navbar a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                navbar.classList.remove('active');
+                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
             });
+        });
 
-            // Active link highlighting
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href').includes('gallery.php')) {
-                    link.classList.add('active');
-                }
-            });
-        }
-
-        // Scroll Animation
+        // Scroll Animation (for elements with .animate class)
         const animateElements = document.querySelectorAll('.animate');
 
         function checkScroll() {
@@ -810,7 +613,7 @@
         window.addEventListener('scroll', checkScroll);
         window.addEventListener('load', checkScroll);
 
-        // Smooth scrolling for anchor links
+        // Smooth scrolling for anchor links (if any on this page)
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -821,105 +624,21 @@
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
                     window.scrollTo({
-                        top: targetElement.offsetTop - 140,
+                        top: targetElement.offsetTop - 140, // Adjust for top info bar + header height
                         behavior: 'smooth'
                     });
                 }
             });
         });
 
-        // Lightbox Functionality
-        const lightbox = document.getElementById('lightbox');
-        const lightboxContent = document.getElementById('lightbox-content');
-        const lightboxTitle = document.getElementById('lightbox-title');
-        const lightboxClose = document.getElementById('lightbox-close');
-        const lightboxPrev = document.getElementById('lightbox-prev');
-        const lightboxNext = document.getElementById('lightbox-next');
-        const galleryItems = document.querySelectorAll('.gallery-item');
+        // Active link highlighting for the current page in the navbar
+        // This will ensure 'Gallery' is always active on gallery.php
 
-        let currentIndex = 0;
-        let mediaArray = [];
 
-        // Build media array from gallery items
-        galleryItems.forEach((item, index) => {
-            mediaArray.push({
-                type: item.dataset.type,
-                src: item.dataset.src,
-                title: item.dataset.title
-            });
-
-            // Add click event to open lightbox
-            item.addEventListener('click', function () {
-                currentIndex = index;
-                openLightbox();
-            });
-        });
-
-        function openLightbox() {
-            lightbox.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Prevent scrolling
-            showMedia(currentIndex);
-        }
-
-        function closeLightbox() {
-            lightbox.classList.remove('active');
-            document.body.style.overflow = ''; // Restore scrolling
-
-            // Stop any playing video
-            const video = lightboxContent.querySelector('video');
-            if (video) {
-                video.pause();
-            }
-        }
-
-        function showMedia(index) {
-            const media = mediaArray[index];
-            lightboxTitle.textContent = media.title;
-
-            if (media.type === 'image') {
-                lightboxContent.innerHTML = `<img src="${media.src}" alt="${media.title}">`;
-            } else if (media.type === 'video') {
-                lightboxContent.innerHTML = `
-                    <video controls autoplay playsinline>
-                        <source src="${media.src}" type="video/${media.src.split('.').pop()}">
-                        Your browser does not support the video tag.
-                    </video>
-                `;
-            }
-        }
-
-        function showNext() {
-            currentIndex = (currentIndex + 1) % mediaArray.length;
-            showMedia(currentIndex);
-        }
-
-        function showPrev() {
-            currentIndex = (currentIndex - 1 + mediaArray.length) % mediaArray.length;
-            showMedia(currentIndex);
-        }
-
-        // Event Listeners
-        lightboxClose.addEventListener('click', closeLightbox);
-        lightboxNext.addEventListener('click', showNext);
-        lightboxPrev.addEventListener('click', showPrev);
-
-        // Close lightbox when clicking outside content
-        lightbox.addEventListener('click', function (e) {
-            if (e.target === lightbox) {
-                closeLightbox();
-            }
-        });
-
-        // Keyboard navigation
-        document.addEventListener('keydown', function (e) {
-            if (!lightbox.classList.contains('active')) return;
-
-            if (e.key === 'Escape') {
-                closeLightbox();
-            } else if (e.key === 'ArrowRight') {
-                showNext();
-            } else if (e.key === 'ArrowLeft') {
-                showPrev();
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href').includes('gallery.php')) { // Always active for services.html
+                link.classList.add('active');
             }
         });
     </script>

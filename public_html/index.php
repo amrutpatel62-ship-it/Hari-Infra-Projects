@@ -1,40 +1,26 @@
 <?php
 // Include database configuration
-require_once 'db_config.php';
+require_once 'db_config.php'; // Make sure this file exists and contains your PDO connection
 
-// Fetch Existing Reviews from SQL with limit
+// Fetch Existing Reviews from SQL
 $reviews = [];
-$show_all = isset($_GET['show_all_reviews']);
-$limit = $show_all ? 100 : 6; // Show 6 by default, or 100 if "show all" is clicked
-
 try {
-    if ($show_all) {
-        $stmt = $pdo->query("SELECT id, name, rating, review, created_at FROM google_reviews ORDER BY created_at DESC");
-    } else {
-        $stmt = $pdo->query("SELECT id, name, rating, review, created_at FROM google_reviews ORDER BY created_at DESC LIMIT $limit");
-    }
+    // Order by review_date descending to show newest reviews first
+    $stmt = $pdo->query("SELECT id, reviewer_name, rating, review_text, review_date FROM google_reviews ORDER BY review_date DESC");
     $reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     error_log("Error fetching reviews for index page: " . $e->getMessage());
-    $reviews = [];
-}
-
-// Get total count for "View All" button
-$total_reviews = 0;
-try {
-    $count_stmt = $pdo->query("SELECT COUNT(*) FROM google_reviews");
-    $total_reviews = $count_stmt->fetchColumn();
-} catch (PDOException $e) {
-    error_log("Error counting reviews: " . $e->getMessage());
+    // Optionally, display a user-friendly message or fall back to dummy data
+    // For production, you might want to suppress this detailed error to the user
 }
 
 // Generate a dummy testimonial if no reviews are found (or if fetching failed)
 if (empty($reviews)) {
     $reviews[] = [
-        'name' => 'Hari Infra Projects Team',
+        'reviewer_name' => 'Hari Infra Projects Team',
         'rating' => 5,
-        'review' => 'We are committed to providing the best solar solutions. Be the first to leave a review!',
-        'created_at' => date('Y-m-d H:i:s')
+        'review_text' => 'We are committed to providing the best solar solutions. Be the first to leave a review!',
+        'review_date' => date('Y-m-d H:i:s')
     ];
 }
 
@@ -49,9 +35,6 @@ if (empty($reviews)) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
      <link rel="stylesheet" href="header.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="icon.png" sizes="144x144" type="image/png">
-    <link rel="apple-touch-icon" href="icon.png">
-    
     <style>
         
 
@@ -385,53 +368,6 @@ if (empty($reviews)) {
 
         .slider-dot.active {
             background-color: var(--primary);
-        }
-
-        /* View All Button Styles */
-        .view-all-container {
-            text-align: center;
-            margin-top: 2rem;
-        }
-        
-        .btn-view-all {
-            background-color: transparent;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-            padding: 0.6rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .btn-view-all:hover {
-            background-color: var(--primary);
-            color: var(--light);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(20, 184, 166, 0.3);
-        }
-        
-        .btn-show-less {
-            background-color: transparent;
-            color: var(--light);
-            border: 2px solid var(--light);
-            padding: 0.6rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .btn-show-less:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
         }
 
         /* CTA Section */
@@ -1061,7 +997,7 @@ if (empty($reviews)) {
 
     <section class="services">
         <div class="section-title">
-            <h2>Our Solar Solutions</h2>
+            <h2>Our Services</h2>
             <p>We provide comprehensive solar EPC solutions tailored to meet your specific energy needs and budget requirements.</p>
         </div>
         
@@ -1095,7 +1031,7 @@ if (empty($reviews)) {
                 <div class="service-content">
                     <h3>Industrial Solar Plants</h3>
                     <p>Large-scale solar installations for industries with high energy demands and reliable performance.</p>
-                    <a href="services.php">Learn More <i class="fas fa-arrow-right"></i></a>
+                    <a href="services.html">Learn More <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
         </div>
@@ -1112,7 +1048,7 @@ if (empty($reviews)) {
                 <?php foreach ($reviews as $index => $review): ?>
                     <div class="testimonial-slide <?php echo ($index === 0) ? 'active' : ''; ?>">
                         <div class="testimonial-content">
-                            "<?php echo nl2br(htmlspecialchars($review['review'])); ?>"
+                            "<?php echo nl2br(htmlspecialchars($review['review_text'])); ?>"
                         </div>
                         <div class="rating-stars">
                             <?php 
@@ -1126,8 +1062,8 @@ if (empty($reviews)) {
                         </div>
                         <div class="testimonial-author">
                             <div class="author-info">
-                                <h4><?php echo htmlspecialchars($review['name']); ?></h4>
-                                <p>Reviewed on: <?php echo date('F j, Y', strtotime($review['created_at'])); ?></p>
+                                <h4><?php echo htmlspecialchars($review['reviewer_name']); ?></h4>
+                                <p>Reviewed on: <?php echo date('F j, Y', strtotime($review['review_date'])); ?></p>
                             </div>
                         </div>
                     </div>
@@ -1141,21 +1077,6 @@ if (empty($reviews)) {
                     <?php endforeach; ?>
                 <?php else: // If 0 or 1 review, show one dot for the single visible "slide" ?>
                     <div class="slider-dot active"></div>
-                <?php endif; ?>
-            </div>
-            
-            <!-- View All Button -->
-            <div class="view-all-container">
-                <?php if (!$show_all && $total_reviews > 6): ?>
-                    <a href="index.php?show_all_reviews=1#testimonials" class="btn-view-all">
-                        View All Reviews (<?php echo $total_reviews; ?>)
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
-                <?php elseif ($show_all): ?>
-                    <a href="index.php#testimonials" class="btn-show-less">
-                        <i class="fas fa-arrow-left"></i>
-                        Show Less Reviews
-                    </a>
                 <?php endif; ?>
             </div>
         </div>

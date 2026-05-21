@@ -38,32 +38,27 @@ if (is_dir($compare_dir)) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Why Choose Us - Hari Infra Projects</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="header.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+       
+
         /* Hero Section for Compare Page */
         .compare-hero {
-            height: 62vh;
-            background: linear-gradient(rgba(17, 24, 39, 0.7), rgba(17, 24, 39, 0.7)),
-                url('https://images.unsplash.com/photo-1509391366360-2e959784a276?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center center/cover;
+            height: 60vh;
+            background: linear-gradient(rgba(17, 24, 39, 0.7), rgba(17, 24, 39, 0.7)), 
+                        url('https://images.unsplash.com/photo-1509391366360-2e959784a276?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center center/cover;
             display: flex;
             align-items: center;
             padding: 0 5%;
             color: var(--light);
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-size: cover;
-            padding: 0 5%;
-            margin-top: 80px;
+           /* Adjusted for fixed header + top info bar */
         }
 
         .compare-hero-content {
@@ -113,58 +108,53 @@ if (is_dir($compare_dir)) {
         }
 
         /* Gallery Grid Styles (Re-used for compare content) */
-        .gallery-content {
-            /* Renamed from gallery-content if you want a different section name, but its structure applies */
+        .gallery-content { /* Renamed from gallery-content if you want a different section name, but its structure applies */
             padding: 5rem 5%;
             max-width: 1200px;
             margin: 0 auto;
         }
 
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
+     .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
 
-        .gallery-grid>* {
-            aspect-ratio: 4 / 3;
-            /* Maintain 4:3 aspect ratio */
-            object-fit: contain;
-            width: 100%;
-            background-color: #ccc;
-            /* Fallback bg */
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
+.gallery-grid > * {
+    aspect-ratio: 4 / 3;          /* Maintain 4:3 aspect ratio */
+    object-fit: contain;
+    width: 100%;
+    background-color: #ccc;      /* Fallback bg */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 
-        /* Style images and videos */
-        .gallery-grid img,
-        .gallery-grid video {
-
-            object-fit: contain;
-            /* Ensure content fills the box */
-
-        }
-
-        .gallery-grid img {
-
-            object-fit: contain;
-            /* Ensure content fills the box */
-
-        }
-
-        video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
+/* Style images and videos */
+.gallery-grid img,
+.gallery-grid video {
+   
+    object-fit: contain;           /* Ensure content fills the box */
+   
+}
+.gallery-grid img {
+   
+    object-fit: contain;           /* Ensure content fills the box */
+   
+}
+video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
         .gallery-item {
             border-radius: 8px;
+            
+           
+            
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             position: relative;
@@ -183,52 +173,18 @@ if (is_dir($compare_dir)) {
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
 
-
-        .gallery-item .item-title {
+        
+             .gallery-item .item-title {
             padding: 1rem;
             font-weight: 600;
-            color: var(--dark);
-            /* Default text color */
+            color: var(--dark); /* Default text color */
             background-color: #ffffff !important;
             width: 100%;
             text-align: center;
-            position: absolute;
+             position: absolute;
             bottom: -1rem;
             z-index: 1;
         }
-
-        /* LIGHTBOX STYLES FOR IMAGES ONLY */
-        #imgLightbox {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 10001;
-            justify-content: center;
-            align-items: center;
-            cursor: zoom-out;
-        }
-
-        #imgLightbox img {
-            max-width: 90%;
-            max-height: 85vh;
-            border: 3px solid #fff;
-            border-radius: 4px;
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            color: #fff;
-            font-size: 40px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
         /* Footer (General styles from index) */
         footer {
             background-color: black;
@@ -334,180 +290,137 @@ if (is_dir($compare_dir)) {
 
         /* Responsive Styles for Gallery Grid */
         @media (max-width: 1024px) {
-            .navbar {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                /* Start hidden off-screen to the right */
-                left: auto;
-                /* Override any left: 0; */
-                width: 250px;
-                /* Adjust width as needed */
-                height: 100vh;
-                background-color: white;
-                /* Or your preferred color */
-                transition: 0.3s ease-in-out;
-                z-index: 999;
-                display: flex;
+            .gallery-grid {
+                columns: 2 280px; /* 2 columns on medium screens */
+            }
+        }
+
+        @media (max-width: 768px) {
+           
+            
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .cta-buttons {
                 flex-direction: column;
-                padding-top: 80px;
-                /* Space for the close button or header height */
+            }
+            
+            .btn {
+                width: 100%;
+                text-align: center;
             }
 
-            .navbar.active {
-                right: 0;
-                left: auto;
+            .gallery-grid {
+                columns: 1 250px; /* Single column on small screens */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .compare-hero-content h1 { /* Changed from gallery-hero-content */
+                font-size: 2.5rem;
+            }
+            
+            .stat-card h3 {
+                font-size: 2rem;
             }
 
-            @media (max-width: 768px) {
-
-
-                .hero-content h1 {
-                    font-size: 2.5rem;
-                }
-
-                .cta-buttons {
-                    flex-direction: column;
-                }
-
-                .btn {
-                    width: 100%;
-                    text-align: center;
-                }
-
-                .gallery-grid {
-                    columns: 1 250px;
-                    /* Single column on small screens */
-                }
+            .gallery-grid {
+                columns: 1; /* Always single column on very small screens */
             }
+        }
 
-            @media (max-width: 480px) {
-                .hero-content h1 {
-                    font-size: 2rem;
-                }
-
-                .section-title h2 {
-                    font-size: 2rem;
-                }
-
-                .compare-hero-content h1 {
-                    /* Changed from gallery-hero-content */
-                    font-size: 2.5rem;
-                }
-
-                .stat-card h3 {
-                    font-size: 2rem;
-                }
-
-                .gallery-grid {
-                    columns: 1;
-                    /* Always single column on very small screens */
-                }
-            }
-
-            /* Animations (General from index) */
-            @keyframes fadeInUp {
-                from {
-                    opacity: 0;
-                    transform: translateY(30px);
-                }
-
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-
-            .animate {
+        /* Animations (General from index) */
+        @keyframes fadeInUp {
+            from {
                 opacity: 0;
                 transform: translateY(30px);
-                transition: all 0.6s ease;
             }
-
-            .animate.animated {
+            to {
                 opacity: 1;
                 transform: translateY(0);
             }
+        }
+
+        .animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .animate.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
-
 <body>
+     <!-- Top Info Bar -->
     <?php include('common/header.php') ?>
 
-    <section class="compare-hero">
-        <div class="compare-hero-content">
-            <h1>Why Choose Hari Infra Projects?</h1>
-            <p>See the clear difference our solar solutions make. Our commitment to quality, efficiency, and customer
-                satisfaction sets us apart.</p>
-        </div>
+    <section 
+        class="compare-hero"> <div class="compare-hero-content"> <h1>Why Choose Hari Infra Projects?</h1> <p>See the clear difference our solar solutions make. Our commitment to quality, efficiency, and customer satisfaction sets us apart.</p> </div>
     </section>
 
-    <section class="gallery-content">
-        <div class="section-title animate">
-            <h2>Before & After Projects</h2>
-            <p>Visual proof of our transformation power. Compare the before and after of our solar installations.</p>
-        </div>
-
+    <section class="gallery-content"> <div class="section-title animate">
+            <h2>Before & After Projects</h2> <p>Visual proof of our transformation power. Compare the before and after of our solar installations.</p> </div>
+        
         <div class="gallery-grid"> <?php
-        // Display videos first (UNTOUCHED CODE)
-        if (isset($media_items['videos'])) {
-            foreach ($media_items['videos'] as $video) {
-                echo '<div class="gallery-item animate">';
-                echo '<video controls playsinline preload="metadata">';
-                echo '<source src="' . htmlspecialchars($video['path']) . '" type="video/' . pathinfo($video['path'], PATHINFO_EXTENSION) . '">';
-                echo 'Your browser does not support the video tag. Please download the video: <a href="' . htmlspecialchars($video['path']) . '">Download ' . htmlspecialchars($video['name']) . '</a>';
-                echo '</video>';
-                echo '<div class="item-title">' . htmlspecialchars(ucwords(str_replace(['-', '_'], ' ', $video['name']))) . '</div>';
-                echo '</div>';
+            // Display videos first
+            if (isset($media_items['videos'])) {
+                foreach ($media_items['videos'] as $video) {
+                    echo '<div class="gallery-item animate">'; // No background classes needed here
+                    echo '<video controls playsinline preload="metadata">';
+                    echo '<source src="' . htmlspecialchars($video['path']) . '" type="video/' . pathinfo($video['path'], PATHINFO_EXTENSION) . '">';
+                    echo 'Your browser does not support the video tag. Please download the video: <a href="' . htmlspecialchars($video['path']) . '">Download ' . htmlspecialchars($video['name']) . '</a>';
+                    echo '</video>';
+                    echo '<div class="item-title">' . htmlspecialchars(ucwords(str_replace(['-', '_'], ' ', $video['name']))) . '</div>';
+                    // Removed item-title as per previous instruction to not show name
+                    echo '</div>';
+                }
             }
-        }
 
-        // Display images (UPDATED WITH CLICK ACTION)
-        if (isset($media_items['images'])) {
-            foreach ($media_items['images'] as $image) {
-                // Added cursor:pointer style and onclick function here
-                echo '<div class="gallery-item animate" style="cursor: pointer;" onclick="openImg(this)">';
-                echo '<img src="' . htmlspecialchars($image['path']) . '" alt="Project Image">';
-                echo '<div class="item-title">' . htmlspecialchars(ucwords(str_replace(['-', '_'], ' ', $image['name']))) . '</div>';
-                echo '</div>';
+            // Then display images
+            if (isset($media_items['images'])) {
+                foreach ($media_items['images'] as $image) {
+                    echo '<div class="gallery-item animate">'; // No background classes needed here
+                    echo '<img src="' . htmlspecialchars($image['path']) . '" alt="Project Image">'; // Alt text generic, or you can dynamically add
+                    echo '<div class="item-title">' . htmlspecialchars(ucwords(str_replace(['-', '_'], ' ', $image['name']))) . '</div>';
+                    echo '</div>';
+                }
             }
-        }
 
-        if (empty($media_items['videos']) && empty($media_items['images'])) {
-            echo '<p style="text-align: center; column-span: all; color: var(--gray);">No comparison media found in the compare folder.</p>';
-        }
-        ?>
+            if (empty($media_items['videos']) && empty($media_items['images'])) {
+                echo '<p style="text-align: center; column-span: all; color: var(--gray);">No comparison media found in the compare folder.</p>';
+            }
+            ?>
         </div>
     </section>
 
-    <div id="imgLightbox" onclick="this.style.display='none'">
-        <span class="close-btn">&times;</span>
-        <img id="activeImg" src="" alt="Zoomed Image">
-    </div>
+  <?php include('common/footer.php') ?>
 
-    <?php include('common/footer.php') ?>
-
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4yFFTOpGkWT/s3E3x1aCpe/HFjFKJtYw4z/y6I7gqM4V+Jt+N2"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
-        integrity="sha384-0pUGZvbkm6XF6gxjEnlco9tFhENBMJ+1L74jKkgu1qgmnL+6Xz8/Q2D1tF1X5w5"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4yFFTOpGkWT/s3E3x1aCpe/HFjFKJtYw4z/y6I7gqM4V+Jt+N2" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlco9tFhENBMJ+1L74jKkgu1qgmnL+6Xz8/Q2D1tF1X5w5" crossorigin="anonymous"></script>
     <script>
-        // Image Lightbox Function
-        function openImg(el) {
-            var src = el.getElementsByTagName('img')[0].src;
-            document.getElementById('activeImg').src = src;
-            document.getElementById('imgLightbox').style.display = 'flex';
-        }
-
-        // Header Scroll Effect
-        window.addEventListener('scroll', function () {
+        // Header Scroll Effect with Top Info Bar consideration
+        window.addEventListener('scroll', function() {
             const header = document.getElementById('header');
+            const topInfoBar = document.querySelector('.top-info-bar');
+            
             if (window.scrollY > 50) {
                 header.classList.add('scrolled');
+               
             } else {
                 header.classList.remove('scrolled');
+               
             }
         });
 
@@ -515,59 +428,64 @@ if (is_dir($compare_dir)) {
         const menuToggle = document.getElementById('menu-toggle');
         const navbar = document.getElementById('navbar');
 
-        if (menuToggle && navbar) {
-            menuToggle.addEventListener('click', function () {
-                navbar.classList.toggle('active');
-                menuToggle.innerHTML = navbar.classList.contains('active') ?
-                    '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
-            });
-        }
+        menuToggle.addEventListener('click', function() {
+            navbar.classList.toggle('active');
+            menuToggle.innerHTML = navbar.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
 
         // Close menu when clicking on a link
         const navLinks = document.querySelectorAll('.navbar a');
         navLinks.forEach(link => {
-            link.addEventListener('click', function () {
+            link.addEventListener('click', function() {
                 navbar.classList.remove('active');
                 menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
             });
         });
 
-        // Scroll Animation
+        // Scroll Animation (for elements with .animate class)
         const animateElements = document.querySelectorAll('.animate');
+        
         function checkScroll() {
             animateElements.forEach(element => {
                 const elementPosition = element.getBoundingClientRect().top;
                 const windowHeight = window.innerHeight;
+                
                 if (elementPosition < windowHeight - 100) {
                     element.classList.add('animated');
                 }
             });
         }
+        
         window.addEventListener('scroll', checkScroll);
         window.addEventListener('load', checkScroll);
 
-        // Smooth scrolling
+        // Smooth scrolling for anchor links (if any on this page)
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+            anchor.addEventListener('click', function(e) {
                 e.preventDefault();
+                
                 const targetId = this.getAttribute('href');
                 if (targetId === '#') return;
+                
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
                     window.scrollTo({
-                        top: targetElement.offsetTop - 120,
+                        top: targetElement.offsetTop - 120, // Adjusted for fixed header height + top info bar
                         behavior: 'smooth'
                     });
                 }
             });
         });
+
+        // Active link highlighting is handled by PHP in header.php
+        // No JavaScript needed - PHP sets the active class based on current page
     </script>
     <a href="https://wa.me/916355048708" target="_blank" aria-label="Chat on WhatsApp"
-        style="position: fixed; bottom: 20px; right: 20px; background-color: #25d366; color: white; font-size: 28px; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.3); transition: background-color 0.3s ease;"
-        onmouseover="this.style.backgroundColor='#1ebea5'; this.style.transform='translateY(-3px)'"
-        onmouseout="this.style.backgroundColor='#25d366'; this.style.transform='none'">
-        <i class="fab fa-whatsapp"></i>
+       style="position: fixed; bottom: 20px; right: 20px; background-color: #25d366; color: white; font-size: 28px; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.3); transition: background-color 0.3s ease;"
+       onmouseover="this.style.backgroundColor='#1ebea5'; this.style.transform='translateY(-3px)'"
+       onmouseout="this.style.backgroundColor='#25d366'; this.style.transform='none'">
+      <i class="fab fa-whatsapp"></i>
     </a>
 </body>
-
 </html>

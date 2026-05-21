@@ -8,8 +8,7 @@ $review_message = '';
 $delete_message = ''; // General message for file deletions or review deletions
 
 // --- Function to handle file uploads ---
-function handleUpload($file_input_name, $target_sub_dir, &$upload_message_var)
-{
+function handleUpload($file_input_name, $target_sub_dir, &$upload_message_var) {
     $target_dir = $target_sub_dir . "/";
 
     // Ensure the directory exists
@@ -94,25 +93,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     } elseif (isset($_POST['add_review'])) {
         $reviewer_name = trim($_POST['reviewer_name']);
-        $rating = (int) $_POST['rating'];
+        $rating = (int)$_POST['rating'];
         $review_text = trim($_POST['review_text']);
 
         if (empty($reviewer_name) || empty($review_text) || $rating < 1 || $rating > 5) {
             $review_message = "<div class='alert alert-warning'>Please fill in all required fields and ensure rating is between 1 and 5.</div>";
         } else {
             try {
-                // FIXED: Use correct column names from your database
-                $sql = "INSERT INTO google_reviews (name, rating, review) VALUES (:reviewer_name, :rating, :review_text)";
+                $sql = "INSERT INTO google_reviews (reviewer_name, rating, review_text) VALUES (:reviewer_name, :rating, :review_text)";
                 $stmt = $pdo->prepare($sql);
                 $stmt->bindParam(':reviewer_name', $reviewer_name, PDO::PARAM_STR);
                 $stmt->bindParam(':rating', $rating, PDO::PARAM_INT);
                 $stmt->bindParam(':review_text', $review_text, PDO::PARAM_STR);
-
+                
                 if ($stmt->execute()) {
                     $review_message = "<div class='alert alert-success'>Review added successfully!</div>";
-                    // Refresh reviews immediately after adding
-                    $stmt = $pdo->query("SELECT id, name, rating, review, created_at FROM google_reviews ORDER BY created_at DESC");
-                    $reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 } else {
                     $review_message = "<div class='alert alert-danger'>Error adding review. Please try again.</div>";
                 }
@@ -123,16 +118,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         $active_tab = 'reviews'; // Switch to reviews tab after adding a review
     } elseif (isset($_POST['delete_review_id'])) {
-        $review_id = (int) $_POST['delete_review_id'];
+        $review_id = (int)$_POST['delete_review_id'];
         try {
             $sql = "DELETE FROM google_reviews WHERE id = :id";
             $stmt = $pdo->prepare($sql);
             $stmt->bindParam(':id', $review_id, PDO::PARAM_INT);
             if ($stmt->execute()) {
                 $review_message = "<div class='alert alert-success'>Review deleted successfully!</div>";
-                // Refresh reviews immediately after deleting
-                $stmt = $pdo->query("SELECT id, name, rating, review, created_at FROM google_reviews ORDER BY created_at DESC");
-                $reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
             } else {
                 $review_message = "<div class='alert alert-danger'>Error deleting review.</div>";
             }
@@ -147,8 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // --- Fetch Existing Reviews ---
 $reviews = [];
 try {
-    // FIXED: Use correct column names from your database - changed review_date to created_at
-    $stmt = $pdo->query("SELECT id, name, rating, review, created_at FROM google_reviews ORDER BY created_at DESC");
+    $stmt = $pdo->query("SELECT id, reviewer_name, rating, review_text, review_date FROM google_reviews ORDER BY review_date DESC");
     $reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     error_log("Error fetching reviews: " . $e->getMessage());
@@ -181,26 +172,20 @@ if (is_dir($compare_dir)) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - Hari Infra Projects</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* Custom CSS variables for consistent theming */
         :root {
-            --primary: #14b8a6;
-            /* Teal */
+            --primary: #14b8a6; /* Teal */
             --primary-dark: #0d9488;
-            --dark: #111827;
-            /* Dark Gray/Black */
-            --light: #f9fafb;
-            /* Off-White */
+            --dark: #111827; /* Dark Gray/Black */
+            --light: #f9fafb; /* Off-White */
             --gray: #6b7280;
             --light-gray: #e5e7eb;
         }
@@ -216,8 +201,7 @@ if (is_dir($compare_dir)) {
             font-family: 'Poppins', sans-serif;
             color: var(--dark);
             background-color: var(--light);
-            overflow-x: hidden;
-            /* Prevent horizontal scroll */
+            overflow-x: hidden; /* Prevent horizontal scroll */
         }
 
         /* Header Styles */
@@ -307,19 +291,16 @@ if (is_dir($compare_dir)) {
 
         /* Hero Section (Admin Specific) */
         .admin-hero {
-            height: 40vh;
-            /* Shorter hero for admin page */
-            background: linear-gradient(rgba(17, 24, 39, 0.7), rgba(17, 24, 39, 0.7)),
-                url('https://images.unsplash.com/photo-1509391366360-2e959784a276?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center center/cover;
+            height: 40vh; /* Shorter hero for admin page */
+            background: linear-gradient(rgba(17, 24, 39, 0.7), rgba(17, 24, 39, 0.7)), 
+                        url('https://images.unsplash.com/photo-1509391366360-2e959784a276?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center center/cover;
             display: flex;
-            flex-direction: column;
-            /* Stack content */
+            flex-direction: column; /* Stack content */
             justify-content: center;
             align-items: center;
             padding: 0 5%;
             color: var(--light);
-            margin-top: 80px;
-            /* Adjust for fixed header */
+            margin-top: 80px; /* Adjust for fixed header */
             text-align: center;
         }
 
@@ -339,8 +320,7 @@ if (is_dir($compare_dir)) {
             padding: 2.5rem;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-            margin-top: 1.5rem;
-            /* Spacing below tabs */
+            margin-top: 1.5rem; /* Spacing below tabs */
         }
 
         .admin-section h2 {
@@ -437,8 +417,7 @@ if (is_dir($compare_dir)) {
             padding: 1.5rem;
             margin-bottom: 1rem;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-            position: relative;
-            /* Added for delete button positioning */
+            position: relative; /* Added for delete button positioning */
         }
 
         .review-card p {
@@ -458,11 +437,10 @@ if (is_dir($compare_dir)) {
             border-top: 1px dashed var(--light-gray);
             padding-top: 0.5rem;
         }
-
+        
         /* Delete button styling for reviews and files */
         .delete-btn {
-            background-color: #dc3545;
-            /* Bootstrap danger color */
+            background-color: #dc3545; /* Bootstrap danger color */
             color: white;
             border: none;
             padding: 0.3rem 0.6rem;
@@ -470,15 +448,13 @@ if (is_dir($compare_dir)) {
             cursor: pointer;
             font-size: 0.8rem;
             transition: background-color 0.3s ease;
-            position: absolute;
-            /* Position the delete button */
+            position: absolute; /* Position the delete button */
             top: 10px;
             right: 10px;
         }
 
         .delete-btn:hover {
-            background-color: #c82333;
-            /* Darker red on hover */
+            background-color: #c82333; /* Darker red on hover */
         }
 
         /* File Card Styles - Adjusted for image/video only display */
@@ -489,32 +465,22 @@ if (is_dir($compare_dir)) {
             padding: 1rem;
             margin-bottom: 1rem;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-            display: flex;
-            /* Use flexbox for alignment */
-            align-items: center;
-            /* Vertically center items */
-            justify-content: center;
-            /* Horizontally center content */
+            display: flex; /* Use flexbox for alignment */
+            align-items: center; /* Vertically center items */
+            justify-content: center; /* Horizontally center content */
             position: relative;
-            min-height: 100px;
-            /* Give it a minimum height */
+            min-height: 100px; /* Give it a minimum height */
         }
 
-        .file-card img,
-        .file-card video {
-            max-width: 100%;
-            /* Make sure image/video doesn't overflow */
-            max-height: 100px;
-            /* Keep thumbnails small */
-            object-fit: contain;
-            /* Contain within the box, don't crop */
+        .file-card img, .file-card video {
+            max-width: 100%; /* Make sure image/video doesn't overflow */
+            max-height: 100px; /* Keep thumbnails small */
+            object-fit: contain; /* Contain within the box, don't crop */
             border-radius: 5px;
-            display: block;
-            /* Ensure it's a block element */
-            margin: auto;
-            /* Center the media */
+            display: block; /* Ensure it's a block element */
+            margin: auto; /* Center the media */
         }
-
+        
         /* Removed .file-info, .file-name, .file-path CSS as they are no longer used */
 
         /* Footer (General styles from index) */
@@ -642,23 +608,23 @@ if (is_dir($compare_dir)) {
                 transition: left 0.3s ease;
                 z-index: 999;
             }
-
+            
             .navbar.active {
                 left: 0;
             }
-
+            
             .menu-toggle {
                 display: block;
             }
-
+            
             .hero-content h1 {
                 font-size: 2.5rem;
             }
-
+            
             .cta-buttons {
                 flex-direction: column;
             }
-
+            
             .btn {
                 width: 100%;
                 text-align: center;
@@ -669,11 +635,11 @@ if (is_dir($compare_dir)) {
             .hero-content h1 {
                 font-size: 2rem;
             }
-
+            
             .section-title h2 {
                 font-size: 2rem;
             }
-
+            
             .admin-hero-content h1 {
                 font-size: 2.5rem;
             }
@@ -686,7 +652,6 @@ if (is_dir($compare_dir)) {
                 opacity: 0;
                 transform: translateY(30px);
             }
-
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -694,13 +659,12 @@ if (is_dir($compare_dir)) {
         }
     </style>
 </head>
-
 <body>
     <header id="header">
         <div class="logo">
             <h1><span>HARI</span> Infra Projects</h1>
         </div>
-
+        
         <nav class="navbar" id="navbar">
             <a href="index.php">Home</a>
             <a href="about.html">About Us</a>
@@ -708,9 +672,8 @@ if (is_dir($compare_dir)) {
             <a href="gallery.php">Our Projects</a>
             <a href="compare.php">Why Choose Us</a>
             <a href="contact.html">Contact Us</a>
-            <a href="admin.php" class="active">Admin</a>
-        </nav>
-
+            <a href="admin.php" class="active">Admin</a> </nav>
+        
         <div class="menu-toggle" id="menu-toggle">
             <i class="fas fa-bars"></i>
         </div>
@@ -723,139 +686,110 @@ if (is_dir($compare_dir)) {
         </div>
     </section>
 
-    <div class="container mt-5">
-        <ul class="nav nav-tabs" id="adminTabs" role="tablist">
+    <div class="container mt-5"> <ul class="nav nav-tabs" id="adminTabs" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link <?php echo ($active_tab === 'gallery') ? 'active' : ''; ?>" id="gallery-tab"
-                    data-bs-toggle="tab" data-bs-target="#gallery" type="button" role="tab" aria-controls="gallery"
-                    aria-selected="<?php echo ($active_tab === 'gallery') ? 'true' : 'false'; ?>">Our Projects</button>
+                <button class="nav-link <?php echo ($active_tab === 'gallery') ? 'active' : ''; ?>" id="gallery-tab" data-bs-toggle="tab" data-bs-target="#gallery" type="button" role="tab" aria-controls="gallery" aria-selected="<?php echo ($active_tab === 'gallery') ? 'true' : 'false'; ?>">Our Projects</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link <?php echo ($active_tab === 'compare') ? 'active' : ''; ?>" id="compare-tab"
-                    data-bs-toggle="tab" data-bs-target="#compare" type="button" role="tab" aria-controls="compare"
-                    aria-selected="<?php echo ($active_tab === 'compare') ? 'true' : 'false'; ?>">Why Choose Us
-                    Management</button>
+                <button class="nav-link <?php echo ($active_tab === 'compare') ? 'active' : ''; ?>" id="compare-tab" data-bs-toggle="tab" data-bs-target="#compare" type="button" role="tab" aria-controls="compare" aria-selected="<?php echo ($active_tab === 'compare') ? 'true' : 'false'; ?>">Why Choose Us Management</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link <?php echo ($active_tab === 'reviews') ? 'active' : ''; ?>" id="reviews-tab"
-                    data-bs-toggle="tab" data-bs-target="#reviews" type="button" role="tab" aria-controls="reviews"
-                    aria-selected="<?php echo ($active_tab === 'reviews') ? 'true' : 'false'; ?>">Google
-                    Reviews</button>
+                <button class="nav-link <?php echo ($active_tab === 'reviews') ? 'active' : ''; ?>" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button" role="tab" aria-controls="reviews" aria-selected="<?php echo ($active_tab === 'reviews') ? 'true' : 'false'; ?>">Google Reviews</button>
             </li>
         </ul>
 
         <div class="tab-content" id="adminTabsContent">
-            <div class="tab-pane fade <?php echo ($active_tab === 'gallery') ? 'show active' : ''; ?>" id="gallery"
-                role="tabpanel" aria-labelledby="gallery-tab">
+            <div class="tab-pane fade <?php echo ($active_tab === 'gallery') ? 'show active' : ''; ?>" id="gallery" role="tabpanel" aria-labelledby="gallery-tab">
                 <div class="admin-section media-upload-section">
                     <h2>Upload Images & Videos (Gallery)</h2>
                     <?php echo $upload_message_gallery; // Display upload status messages for gallery ?>
-                    <?php if (isset($delete_message) && $active_tab === 'gallery')
-                        echo $delete_message; // Display file deletion message if it pertains to this tab ?>
+                    <?php if (isset($delete_message) && $active_tab === 'gallery') echo $delete_message; // Display file deletion message if it pertains to this tab ?>
                     <form action="admin.php" method="POST" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="gallery_file">Select Image or Video for Gallery:</label>
-                            <input type="file" class="form-control" id="gallery_file" name="gallery_file"
-                                accept="image/*,video/*" required>
-                            <small class="form-text text-muted">Max file size: 50MB. Allowed formats: JPG, PNG, GIF,
-                                MP4, WEBM, OGG, MOV, WEBP.</small>
+                            <input type="file" class="form-control" id="gallery_file" name="gallery_file" accept="image/*,video/*" required>
+                            <small class="form-text text-muted">Max file size: 50MB. Allowed formats: JPG, PNG, GIF, MP4, WEBM, OGG, MOV, WEBP.</small>
                         </div>
                         <button type="submit" class="btn-submit">Upload to Our Projects</button>
                     </form>
 
                     <h3 class="mt-4">Existing Our Projects Files</h3>
                     <div class="row"> <?php if (!empty($gallery_files)): ?>
-                            <?php foreach ($gallery_files as $file): ?>
-                                <div class="col-6 col-md-4 col-lg-3 mb-3">
-                                    <div class="file-card">
-                                        <?php
+                        <?php foreach ($gallery_files as $file): ?>
+                            <div class="col-6 col-md-4 col-lg-3 mb-3"> <div class="file-card">
+                                    <?php 
                                         $file_extension = pathinfo($file, PATHINFO_EXTENSION);
                                         // Added 'webp' to image types
                                         if (in_array($file_extension, ['jpg', 'jpeg', 'png', 'gif', 'webp'])):
-                                            ?>
-                                            <img src="<?php echo htmlspecialchars($file); ?>"
-                                                alt="<?php echo htmlspecialchars(basename($file)); ?>">
-                                        <?php elseif (in_array($file_extension, ['mp4', 'webm', 'ogg', 'mov'])): ?>
-                                            <video src="<?php echo htmlspecialchars($file); ?>" controls width="100%"
-                                                height="auto"></video>
-                                        <?php else: ?>
-                                            <i class="fas fa-file-alt" style="font-size: 50px; color: var(--gray);"></i>
-                                        <?php endif; ?>
-                                        <form action="admin.php" method="POST"
-                                            onsubmit="return confirm('Are you sure you want to delete this file?');">
-                                            <input type="hidden" name="delete_file"
-                                                value="<?php echo htmlspecialchars($file); ?>">
-                                            <button type="submit" class="delete-btn"><i class="fas fa-times"></i></button>
-                                        </form>
-                                    </div>
+                                    ?>
+                                        <img src="<?php echo htmlspecialchars($file); ?>" alt="<?php echo htmlspecialchars(basename($file)); ?>">
+                                    <?php elseif (in_array($file_extension, ['mp4', 'webm', 'ogg', 'mov'])): ?>
+                                        <video src="<?php echo htmlspecialchars($file); ?>" controls width="100%" height="auto"></video>
+                                    <?php else: ?>
+                                        <i class="fas fa-file-alt" style="font-size: 50px; color: var(--gray);"></i>
+                                    <?php endif; ?>
+                                    <form action="admin.php" method="POST" onsubmit="return confirm('Are you sure you want to delete this file?');">
+                                        <input type="hidden" name="delete_file" value="<?php echo htmlspecialchars($file); ?>">
+                                        <button type="submit" class="delete-btn"><i class="fas fa-times"></i></button>
+                                    </form>
                                 </div>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <p class="text-muted mt-3">No files found in Our Projects yet.</p>
-                        <?php endif; ?>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p class="text-muted mt-3">No files found in Our Projects yet.</p>
+                    <?php endif; ?>
                     </div>
                 </div>
             </div>
-
-            <div class="tab-pane fade <?php echo ($active_tab === 'compare') ? 'show active' : ''; ?>" id="compare"
-                role="tabpanel" aria-labelledby="compare-tab">
+            
+            <div class="tab-pane fade <?php echo ($active_tab === 'compare') ? 'show active' : ''; ?>" id="compare" role="tabpanel" aria-labelledby="compare-tab">
                 <div class="admin-section compare-upload-section">
                     <h2>Upload Images & Videos (Compare)</h2>
                     <?php echo $upload_message_compare; // Display upload status messages for compare ?>
-                    <?php if (isset($delete_message) && $active_tab === 'compare')
-                        echo $delete_message; // Display file deletion message if it pertains to this tab ?>
+                    <?php if (isset($delete_message) && $active_tab === 'compare') echo $delete_message; // Display file deletion message if it pertains to this tab ?>
                     <form action="admin.php" method="POST" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="compare_file">Select Image or Video for Why Choose Us:</label>
-                            <input type="file" class="form-control" id="compare_file" name="compare_file"
-                                accept="image/*,video/*" required>
-                            <small class="form-text text-muted">Max file size: 50MB. Allowed formats: JPG, PNG, GIF,
-                                MP4, WEBM, OGG, MOV, WEBP.</small>
+                            <input type="file" class="form-control" id="compare_file" name="compare_file" accept="image/*,video/*" required>
+                            <small class="form-text text-muted">Max file size: 50MB. Allowed formats: JPG, PNG, GIF, MP4, WEBM, OGG, MOV, WEBP.</small>
                         </div>
                         <button type="submit" class="btn-submit">Upload to Why Choose Us</button>
                     </form>
 
                     <h3 class="mt-4">Existing Why Choose Us Files</h3>
                     <div class="row"> <?php if (!empty($compare_files)): ?>
-                            <?php foreach ($compare_files as $file): ?>
-                                <div class="col-6 col-md-4 col-lg-3 mb-3">
-                                    <div class="file-card">
-                                        <?php
+                        <?php foreach ($compare_files as $file): ?>
+                            <div class="col-6 col-md-4 col-lg-3 mb-3"> <div class="file-card">
+                                    <?php 
                                         $file_extension = pathinfo($file, PATHINFO_EXTENSION);
                                         // Added 'webp' to image types
                                         if (in_array($file_extension, ['jpg', 'jpeg', 'png', 'gif', 'webp'])):
-                                            ?>
-                                            <img src="<?php echo htmlspecialchars($file); ?>"
-                                                alt="<?php echo htmlspecialchars(basename($file)); ?>">
-                                        <?php elseif (in_array($file_extension, ['mp4', 'webm', 'ogg', 'mov'])): ?>
-                                            <video src="<?php echo htmlspecialchars($file); ?>" controls width="100%"
-                                                height="auto"></video>
-                                        <?php else: ?>
-                                            <i class="fas fa-file-alt" style="font-size: 50px; color: var(--gray);"></i>
-                                        <?php endif; ?>
-                                        <form action="admin.php" method="POST"
-                                            onsubmit="return confirm('Are you sure you want to delete this file?');">
-                                            <input type="hidden" name="delete_file"
-                                                value="<?php echo htmlspecialchars($file); ?>">
-                                            <button type="submit" class="delete-btn"><i class="fas fa-times"></i></button>
-                                        </form>
-                                    </div>
+                                    ?>
+                                        <img src="<?php echo htmlspecialchars($file); ?>" alt="<?php echo htmlspecialchars(basename($file)); ?>">
+                                    <?php elseif (in_array($file_extension, ['mp4', 'webm', 'ogg', 'mov'])): ?>
+                                        <video src="<?php echo htmlspecialchars($file); ?>" controls width="100%" height="auto"></video>
+                                    <?php else: ?>
+                                        <i class="fas fa-file-alt" style="font-size: 50px; color: var(--gray);"></i>
+                                    <?php endif; ?>
+                                    <form action="admin.php" method="POST" onsubmit="return confirm('Are you sure you want to delete this file?');">
+                                        <input type="hidden" name="delete_file" value="<?php echo htmlspecialchars($file); ?>">
+                                        <button type="submit" class="delete-btn"><i class="fas fa-times"></i></button>
+                                    </form>
                                 </div>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <p class="text-muted mt-3">No files found in Why Choose Us yet.</p>
-                        <?php endif; ?>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p class="text-muted mt-3">No files found in Why Choose Us yet.</p>
+                    <?php endif; ?>
                     </div>
                 </div>
             </div>
 
-            <div class="tab-pane fade <?php echo ($active_tab === 'reviews') ? 'show active' : ''; ?>" id="reviews"
-                role="tabpanel" aria-labelledby="reviews-tab">
+            <div class="tab-pane fade <?php echo ($active_tab === 'reviews') ? 'show active' : ''; ?>" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
                 <div class="admin-section google-reviews-section">
                     <h2>Manage Google Reviews</h2>
                     <?php echo $review_message; // Display review status messages ?>
-                    <?php if (isset($delete_message) && $active_tab === 'reviews')
-                        echo $delete_message; // Display review deletion message if it pertains to this tab ?>
+                    <?php if (isset($delete_message) && $active_tab === 'reviews') echo $delete_message; // Display review deletion message if it pertains to this tab ?>
 
                     <h3>Add New Review</h3>
                     <form action="admin.php" method="POST">
@@ -877,8 +811,7 @@ if (is_dir($compare_dir)) {
                         </div>
                         <div class="form-group">
                             <label for="review_text">Review Text:</label>
-                            <textarea class="form-control" id="review_text" name="review_text" rows="5"
-                                required></textarea>
+                            <textarea class="form-control" id="review_text" name="review_text" rows="5" required></textarea>
                         </div>
                         <button type="submit" class="btn-submit">Submit Review</button>
                     </form>
@@ -887,9 +820,9 @@ if (is_dir($compare_dir)) {
                     <?php if (!empty($reviews)): ?>
                         <?php foreach ($reviews as $review): ?>
                             <div class="review-card">
-                                <p><strong><?php echo htmlspecialchars($review['name']); ?></strong></p>
+                                <p><strong><?php echo htmlspecialchars($review['reviewer_name']); ?></strong></p>
                                 <p class="rating">
-                                    <?php
+                                    <?php 
                                     for ($i = 0; $i < $review['rating']; $i++) {
                                         echo '<i class="fas fa-star"></i>'; // Solid star for rated
                                     }
@@ -898,11 +831,9 @@ if (is_dir($compare_dir)) {
                                     }
                                     ?>
                                 </p>
-                                <p><?php echo nl2br(htmlspecialchars($review['review'])); ?></p>
-                                <p class="reviewer-info">Reviewed on:
-                                    <?php echo date('F j, Y, g:i a', strtotime($review['created_at'])); ?></p>
-                                <form action="admin.php" method="POST"
-                                    onsubmit="return confirm('Are you sure you want to delete this review?');">
+                                <p><?php echo nl2br(htmlspecialchars($review['review_text'])); ?></p>
+                                <p class="reviewer-info">Reviewed on: <?php echo date('F j, Y, g:i a', strtotime($review['review_date'])); ?></p>
+                                <form action="admin.php" method="POST" onsubmit="return confirm('Are you sure you want to delete this review?');">
                                     <input type="hidden" name="delete_review_id" value="<?php echo $review['id']; ?>">
                                     <button type="submit" class="delete-btn">Delete</button>
                                 </form>
@@ -914,22 +845,19 @@ if (is_dir($compare_dir)) {
                 </div>
             </div>
         </div>
-    </div>
-    <footer>
+    </div> <footer>
         <div class="footer-container">
             <div class="footer-col">
                 <div class="logo">
                     <h1 style="color: white;"><span>HARI</span> Infra Projects</h1>
                 </div>
-                <p>Powering a greener tomorrow with reliable, efficient, and affordable solar energy solutions across
-                    Gujarat since 2021.</p>
+                <p>Powering a greener tomorrow with reliable, efficient, and affordable solar energy solutions across Gujarat since 2021.</p>
                 <div class="social-links">
-                    <a href="https://www.facebook.com/profile.php?id=100088891761152"><i
-                            class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=100088891761152"><i class="fab fa-facebook-f"></i></a>
                     <a href="https://www.instagram.com/hari_solar_mehsana/"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
-
+            
             <div class="footer-col">
                 <h3>Quick Links</h3>
                 <ul class="footer-links">
@@ -942,7 +870,7 @@ if (is_dir($compare_dir)) {
                     <li><a href="#">Terms & Conditions</a></li>
                 </ul>
             </div>
-
+            
             <div class="footer-col">
                 <h3>Our Services</h3>
                 <ul class="footer-links">
@@ -954,42 +882,37 @@ if (is_dir($compare_dir)) {
                     <li><a href="services.html">Government Approvals</a></li>
                 </ul>
             </div>
-
+            
             <div class="footer-col">
                 <h3>Contact Us</h3>
                 <div class="footer-contact">
-                    <p><i class="fas fa-map-marker-alt"></i> 25-A ASHTAVINAYAK INDUSTRIAL PARK, MEHSANA, nr. ISCON
-                        CIRCLE, BYPASROAD, Nugar, Gujarat 384002</p>
-
-                    <p><i class="fas fa-phone-alt"></i>
+                    <p><i class="fas fa-map-marker-alt"></i> 25-A ASHTAVINAYAK INDUSTRIAL PARK, MEHSANA, nr. ISCON CIRCLE, BYPASROAD, Nugar, Gujarat 384002</p>
+                    
+                    <p><i class="fas fa-phone-alt"></i> 
                         <a href="tel:+916355048708" style="color: inherit; text-decoration: none;">+91 6355048708</a>
                     </p>
-
-                    <p><i class="fas fa-envelope"></i>
-                        <a href="mailto:info@hariindia.in"
-                            style="color: inherit; text-decoration: none;">info@hariindia.in</a>
+                    
+                    <p><i class="fas fa-envelope"></i> 
+                        <a href="mailto:info@hariindia.in" style="color: inherit; text-decoration: none;">info@hariindia.in</a>
                     </p>
-
-                    <p><i class="fab fa-whatsapp"></i>
-                        <a href="https://wa.me/916355048708" target="_blank"
-                            style="color: inherit; text-decoration: none;">+91 6355048708</a>
+                    
+                    <p><i class="fab fa-whatsapp"></i> 
+                        <a href="https://wa.me/916355048708" target="_blank" style="color: inherit; text-decoration: none;">+91 6355048708</a>
                     </p>
                 </div>
             </div>
 
         </div>
-
+        
         <div class="footer-bottom">
             <p>&copy; 2023 Hari Infra Projects. All Rights Reserved.</p>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
         // Header Scroll Effect
-        window.addEventListener('scroll', function () {
+        window.addEventListener('scroll', function() {
             const header = document.getElementById('header');
             if (window.scrollY > 50) {
                 header.classList.add('scrolled');
@@ -1002,16 +925,16 @@ if (is_dir($compare_dir)) {
         const menuToggle = document.getElementById('menu-toggle');
         const navbar = document.getElementById('navbar');
 
-        menuToggle.addEventListener('click', function () {
+        menuToggle.addEventListener('click', function() {
             navbar.classList.toggle('active');
-            menuToggle.innerHTML = navbar.classList.contains('active') ?
+            menuToggle.innerHTML = navbar.classList.contains('active') ? 
                 '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
         });
 
         // Close menu when clicking on a link
         const navLinks = document.querySelectorAll('.navbar a');
         navLinks.forEach(link => {
-            link.addEventListener('click', function () {
+            link.addEventListener('click', function() {
                 navbar.classList.remove('active');
                 menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
             });
@@ -1030,5 +953,4 @@ if (is_dir($compare_dir)) {
         // The .animate class is still in CSS but not applied to the tab panes directly.
     </script>
 </body>
-
 </html>
