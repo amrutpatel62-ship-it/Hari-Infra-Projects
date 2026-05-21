@@ -1,9 +1,18 @@
 {
   "version": 2,
-  "builds": [
+  "functions": {
+    "*.php": {
+      "runtime": "vercel-php@0.7.3"
+    }
+  },
+  "routes": [
     {
-      "src": "*.php",
-      "use": "@vercel/php"
+      "src": "/(.*\\.php)$",
+      "dest": "/$1"
+    },
+    {
+      "src": "/",
+      "dest": "/index.php"
     }
   ]
 }
